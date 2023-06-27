@@ -14,15 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RecetIA',
+      // title: 'RecetIA',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(        
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.blue,
-        textTheme: TextTheme(
-          bodyText2: TextStyle(color: Colors.white),
-        ),
-      ),
+      // theme: ThemeData(        
+      //   primarySwatch: Colors.blue,
+      //   primaryColor: Colors.blue,
+      //   textTheme: TextTheme(
+      //     bodyText2: TextStyle(color: Colors.white),
+      //   ),
+      // ),
       home: HomePage(),
     );
   }

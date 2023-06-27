@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recet_iav2/consent/appbar.dart';
+import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/views/widgets/recipe_card.dart';
 
 import '../models/recipe.api.dart';
@@ -36,15 +38,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Icon(Icons.restaurant_menu),
-          SizedBox(width: 10),
-          Text('Food Recipe')
-        ]),
-      ),
+
+      backgroundColor: background,
+
+      appBar: appBar(),
+
+     //codigo del otro videoooo
       body: _isLoading 
       ? Center(child: CircularProgressIndicator())
       : ListView.builder(
@@ -57,6 +56,10 @@ class _HomePageState extends State<HomePage> {
             thumbnailUrl: _recipes[index].images);
         }),
         )
+        //codigo del otro videoooo
+
+
+        
     );
   }
 }
