@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       SliverToBoxAdapter(
         child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-              child: Text('Categoria Popular',
+              child: Text('Categorias',
               style: TextStyle(
                 fontSize: 20,
                 color: font,
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 15,),
             Row(
               children: [
-                Text('Populars',style: TextStyle(
+                Text('Inicio',style: TextStyle(
                               fontSize: 20,
                               color: font,
                               fontFamily: 'ro',

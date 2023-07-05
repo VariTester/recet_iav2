@@ -62,9 +62,9 @@ return Container(
           ),
         ),
       ),
-      SizedBox(height: 20),
+      SizedBox(height: 10),
       Padding(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(2),
         child: Text(
           limitarLongitud(title, 35), // Limitar el título a 5 letras
           textAlign: TextAlign.center,
