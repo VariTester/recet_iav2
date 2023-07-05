@@ -16,10 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
+  int indexOntap = 0;
   //parte del codigo de abajo del popular
- 
-
   //gaaaa
   List<Recipe> _recipes;
   bool _isLoading = true;
@@ -54,122 +52,102 @@ class _HomePageState extends State<HomePage> {
       appBar: appBar(),
 
      //codigo del otro videoooo
-      body:    
+
+      body:
+
       _isLoading 
       ? Center(child: CircularProgressIndicator())
       : 
-      // CustomScrollView(
-      //   slivers: [
-      //     SliverToBoxAdapter(
-      //       child: Padding(
-      //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      //         child: Text(
-      //           'Popular',
-      //           style: TextStyle(fontSize: 20, color: font, fontFamily: 'ro'
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //     SliverPadding(
-      //       padding: EdgeInsets.symmetric(horizontal: 15),
-      //       sliver: SliverToBoxAdapter(
-      //         child: Column(
-      //           children: [
-      //           Container(
-      //             height: 50,
-      //             child: ListView.builder(
-      //               //probando metiendo esto aqui
-                      
-          
-      //               itemCount: 5,
-          
-      //               scrollDirection: Axis.horizontal,
-      //             itemBuilder: (((context, index) {
-      //               return Padding(
-      //                 padding: const EdgeInsets.only(right: 10),
-      //                 child: GestureDetector(
-      //                   onTap: (){
-      //                     setState(() {
-      //                       indexx=index;
-      //                     });
-      //                   },
-      //                   child: Container(
-      //                     decoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.circular(20),
-      //                       color: indexx == index
-      //                             ? maincolor
-      //                             : Colors.white,
-      //                             boxShadow: [
-      //                               BoxShadow(
-      //                                 color: indexx == index
-      //                                 ? maincolor
-      //                                 : Colors.transparent,
-      //                                 offset: indexx == index
-      //                                 ? Offset(1, 1)
-      //                                 : Offset(0, 0),
-      //                                 blurRadius: indexx == index ? 10 : 0, 
-      //                               ),
-      //                             ],
-      //                     ),
-      //                     child: Center(
-      //                       child: Padding(
-      //                         padding: const EdgeInsets.symmetric(horizontal: 17),
-      //                         child: Text(
-      //                           category[index],
-      //                           style: TextStyle(
-      //                             fontSize: 16,
-      //                             color: indexx == index
-      //                             ? Colors.white
-      //                             :font,
-      //                             fontFamily: 'ro',
-      //                             ),
-      //                             ),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               );
-      //             }))),
+    CustomScrollView(
+    slivers: <Widget>[
+      SliverToBoxAdapter(
+        child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+              child: Text('Categoria Popular',
+              style: TextStyle(
+                fontSize: 20,
+                color: font,
+                fontFamily: 'ro',
+              ),
+              ),
+            ),
+      ),
 
-                  
+      SliverPadding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        sliver: SliverToBoxAdapter(
+          child: Column(children: [
+            Container(
+              height: 50,
+              child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context,index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    
+                    onTap: () {
+                      setState(() {
+                        indexOntap = index;
+                      });
+                    },
 
-      //           ),
-
-                
-
-      //           SizedBox(height: 15),
-      //           Row(
-      //             children: [
-      //               Text('Popular',style: TextStyle(
-      //                                 fontSize: 20,
-      //                                 color: font,
-      //                                 fontFamily: 'ro'
-      //                                 ),
-      //               ),
-      //             ],
-      //           )
-      //         ],
-      //         ),
-      //       ),
-      //     ),
-          
-      //   ],
-        
-      // ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: indexOntap == index
+                          ? maincolor
+                          : Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: indexOntap == index
+                                ? maincolor
+                                : Colors.transparent,
+                              offset: indexOntap == index
+                                ? Offset(1, 1)
+                                : Offset(0, 0),
+                              blurRadius: indexOntap == index ? 7 : 0,
+                            )
+                          ],
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 17),
+                          child: Text(
+                            category[index],
+                            style: TextStyle(
+                          fontSize: 16,
+                          color: indexOntap == index
+                          ? Colors.white
+                          : font,
+                          fontFamily: 'ro',
+                    ),
+                    ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+              ),
+              ),
+            ),
+            SizedBox(height: 15,),
+            Row(
+              children: [
+                Text('Populars',style: TextStyle(
+                              fontSize: 20,
+                              color: font,
+                              fontFamily: 'ro',
+                        ),),
+              ],
+            )
+          ]),
+        ),
+      ),
       
-      // ListView.builder(
-      //   itemCount: _recipes.length,
-      //   itemBuilder: ((context, index) {
-      //     return RecipeCard(
-      //       title: _recipes[index].name,
-      //       cookTime: _recipes[index].totalTime,
-      //       rating: _recipes[index].rating.toString(),
-      //       thumbnailUrl: _recipes[index].images);
-      //   }),
-      //   ),
-
-CustomScrollView(
-  slivers: <Widget>[
     SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20), // Espacio de relleno alrededor del GridView.builder
       sliver: SliverGrid(
@@ -196,12 +174,6 @@ CustomScrollView(
     ),
   ],
 )
-
-
-        //codigo del otro videoooo
-        
-        
-
-    );
+   );
   }
 }
