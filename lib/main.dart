@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recet_iav2/views/home.dart';
+import 'package:recet_iav2/views/recipe_details.dart';
 
 void main() {
    // derepente borrar esto el const
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       //     bodyText2: TextStyle(color: Colors.white),
       //   ),
       // ),
-      home: HomePage(),
+      home: Recipe_details(),
     );
   }
 }
