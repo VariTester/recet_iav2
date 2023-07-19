@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recet_iav2/consent/appbar.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/main.dart';
+import 'package:recet_iav2/views/detail_page.dart';
+import 'package:recet_iav2/views/recipe_details.dart';
 import 'package:recet_iav2/views/widgets/recipe_card.dart';
 
 import '../models/recipe.api.dart';
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = false;
     });
-    print(_recipes);
+    // print(_recipes);
   }
 
 
@@ -161,11 +163,24 @@ class _HomePageState extends State<HomePage> {
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return RecipeCard(
-              title: _recipes[index].name,
-              cookTime: _recipes[index].totalTime,
-              rating: _recipes[index].rating.toString(),
-              thumbnailUrl: _recipes[index].images,
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext contex)=>Recipe_details(
+                      thumbnailUrl: _recipes[index].images,
+                    ),
+                      
+                    ),
+                );
+              },
+              child: RecipeCard(
+            
+                title: _recipes[index].name,
+                cookTime: _recipes[index].totalTime,
+                rating: _recipes[index].rating.toString(),
+                thumbnailUrl: _recipes[index].images,
+              ),
             );
           },
           childCount: _recipes.length,
