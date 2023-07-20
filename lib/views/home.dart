@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
 
    int indexx = 0;
-   List category = ['Inicio','Desayuno','Almuerzo', 'Cena', 'IA'];
+   List category = ['Desayuno','Almuerzo', 'Cena'];
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               height: 50,
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: 3,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: ((context,index) {
                 return Padding(
