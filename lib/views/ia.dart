@@ -6,6 +6,9 @@ import 'package:recet_iav2/constants/constants.dart';
 import 'package:recet_iav2/main.dart';
 import 'package:recet_iav2/services/assets_manager.dart';
 import 'package:recet_iav2/views/widgets/chat_widget.dart';
+import 'package:recet_iav2/views/widgets/text_widget.dart';
+
+import '../services/services.dart';
 class Ia extends StatefulWidget {
   const Ia({Key key}) : super(key: key);
 
@@ -46,12 +49,15 @@ class _IaState extends State<Ia> {
                   'recetIA chat box',style: TextStyle(
                   fontSize: 20,
                   //color del titulo
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 233, 227, 227),
                   fontFamily: 'ro',
                 ),
                 ),
                 actions: [
-                  IconButton(onPressed: (){},
+                  IconButton(
+                  onPressed: ()async{
+                    await Services.showModalSheet(context:context);
+                  },
                    icon: Icon(Icons.more_vert_rounded))
                 ],
       ),
@@ -96,7 +102,7 @@ class _IaState extends State<Ia> {
                           hintText: "Hola! Cómo puedo ayudarte?",
                           hintStyle: TextStyle(
                             //color de la letra en espera
-                            color: Color.fromARGB(255, 8, 8, 8), 
+                            color: Color.fromARGB(80, 8, 8, 8), 
                             ),
                             ),
                         ),
