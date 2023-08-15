@@ -1,13 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/constants/constants.dart';
 import 'package:recet_iav2/main.dart';
+import 'package:recet_iav2/models/chat_model.dart';
+import 'package:recet_iav2/providers/chats_provider.dart';
+import 'package:recet_iav2/services/api_services.dart';
 import 'package:recet_iav2/services/assets_manager.dart';
 import 'package:recet_iav2/views/widgets/chat_widget.dart';
 import 'package:recet_iav2/views/widgets/text_widget.dart';
 
+import '../providers/models_provider.dart';
 import '../services/services.dart';
 class Ia extends StatefulWidget {
   const Ia({Key key}) : super(key: key);
@@ -17,25 +24,38 @@ class Ia extends StatefulWidget {
 }
 
 class _IaState extends State<Ia> {
+  // Declarar y inicializar un FocusNode
+  FocusNode focusNode = FocusNode();
+//aca le saque el finel al bool
+   bool _isTyping = false;
 
-  final bool _isTyping = true;
+  ScrollController _listScrollController;
 
    TextEditingController textEditingController;
+  //  Late Focusnode focusnode
   @override
   void initState() {
     // TODO: implement initState
+    _listScrollController = ScrollController();
     textEditingController = TextEditingController();
+    focusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
+    _listScrollController.dispose();
+    // Liberar recursos asociados al FocusNode en el dispose
     textEditingController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
+  // List<ChatModel> chatList = [];
 
   @override
   Widget build(BuildContext context) {
+    final modelsProvider = Provider.of<ModelsProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -66,11 +86,12 @@ class _IaState extends State<Ia> {
           children: [
           Flexible(
             child: ListView.builder(
-              itemCount: 6,
+              controller: _listScrollController,
+              itemCount: chatProvider.getChatList.length, //chatList.length,
               itemBuilder:(context, index) {
                 return  ChhatWidget(
-                  msg: chatMessages[index]["msg"],
-                  chatIndex: chatMessages[index]["chatIndex"],
+                  msg: chatProvider.getChatList[index].msg,//chatList[index].msg,
+                  chatIndex: chatProvider.getChatList[index].chatIndex, //chatList[index].chatIndex,
                 );
               },),
           ),
@@ -79,7 +100,7 @@ class _IaState extends State<Ia> {
               //para controlar ell color del cargador
               color: maincolor,
               size: 20,
-              ),
+              ),],
               const SizedBox(height: 15,),
               Material(
                 //el color del rectangulo para escribir
@@ -90,13 +111,15 @@ class _IaState extends State<Ia> {
                     children: [
                       Expanded(
                         child: TextField(
+                          focusNode: focusNode,
                           style: const TextStyle(
                             //color de la letra cuando escribes
                             color: Color.fromARGB(255, 0, 0, 0),
                             ),
                           controller: textEditingController,
-                          onSubmitted: (value){
-                          //Todo send message
+                          onSubmitted: (value) async{
+                            await sendMessageFCT(
+                              modelsProvider: modelsProvider,chatProvider: chatProvider);
                         },
                         decoration: const InputDecoration.collapsed(
                           hintText: "Hola! Cómo puedo ayudarte?",
@@ -107,15 +130,51 @@ class _IaState extends State<Ia> {
                             ),
                         ),
                       ),
-                      IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.paperPlane,))
+                      IconButton(
+                        onPressed: ()async {
+                          await sendMessageFCT(
+                            modelsProvider: modelsProvider,chatProvider: chatProvider);
+                        },
+                      icon: const Icon(FontAwesomeIcons.paperPlane,))
                     ],
                   ),
                 ),
-              )
-          ]
+              ),
          ],
          ),
        )
     );
+  }
+  void scrollListToEND(){
+    _listScrollController.animateTo(_listScrollController.position.maxScrollExtent, duration: const Duration(seconds: 2), curve: Curves.easeOut);
+  }
+  Future<void> sendMessageFCT ({ ModelsProvider modelsProvider, ChatProvider chatProvider}) async {
+    try{
+          // log("se ha mandado con exito la respuesta");
+      setState(() {
+        _isTyping=true;
+        // chatList.add(ChatModel(msg: textEditingController.text,chatIndex: 0));
+        chatProvider.addUserMessage(msg: textEditingController.text);
+        textEditingController.clear();
+        focusNode.unfocus();
+      });
+      await chatProvider.sendMessageAndGetAnswers(
+        msg: textEditingController.text,
+        choosenModelId: modelsProvider.getCurrentModel);
+      // chatList.addAll(
+      //   await ApiService.sendMessage(
+      //   message: textEditingController.text,
+      //   modelId: modelsProvider.getCurrentModel
+      // ),
+      // );
+      setState(() {});
+    }catch(error){
+      log("error $error");
+    }finally{
+      setState(() {
+        scrollListToEND();
+      _isTyping = false;
+      });
+    }
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recet_iav2/providers/chats_provider.dart';
+import 'package:recet_iav2/providers/models_provider.dart';
 import 'package:recet_iav2/views/home.dart';
 import 'package:recet_iav2/views/recipe_details.dart';
 import 'package:recet_iav2/views/splash.dart';
@@ -17,17 +20,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // title: 'RecetIA',
-      debugShowCheckedModeBanner: false,
-      // theme: ThemeData(        
-      //   primarySwatch: Colors.blue,
-      //   primaryColor: Colors.blue,
-      //   textTheme: TextTheme(
-      //     bodyText2: TextStyle(color: Colors.white),
-      //   ),
-      // ),
-      home: Navigation(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_)=> ModelsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_)=> ChatProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        // title: 'RecetIA',
+        debugShowCheckedModeBanner: false,
+        // theme: ThemeData(        
+        //   primarySwatch: Colors.blue,
+        //   primaryColor: Colors.blue,
+        //   textTheme: TextTheme(
+        //     bodyText2: TextStyle(color: Colors.white),
+        //   ),
+        // ),
+        home: Navigation(),
+      ),
     );
   }
 }
