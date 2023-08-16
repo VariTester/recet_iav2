@@ -119,7 +119,8 @@ class _IaState extends State<Ia> {
                           controller: textEditingController,
                           onSubmitted: (value) async{
                             await sendMessageFCT(
-                              modelsProvider: modelsProvider,chatProvider: chatProvider);
+                              modelsProvider: modelsProvider,
+                              chatProvider: chatProvider);
                         },
                         decoration: const InputDecoration.collapsed(
                           hintText: "Hola! Cómo puedo ayudarte?",
@@ -148,18 +149,45 @@ class _IaState extends State<Ia> {
   void scrollListToEND(){
     _listScrollController.animateTo(_listScrollController.position.maxScrollExtent, duration: const Duration(seconds: 2), curve: Curves.easeOut);
   }
-  Future<void> sendMessageFCT ({ ModelsProvider modelsProvider, ChatProvider chatProvider}) async {
+  Future<void> sendMessageFCT (
+    {ModelsProvider modelsProvider,
+    ChatProvider chatProvider}) async {
+          if(_isTyping){
+        ScaffoldMessenger.of(
+        context).showSnackBar(
+          const SnackBar(
+            content: TextWidget(
+              label: "Por favor no mandes múltiples mensajes al mismo tiempo",
+              ),
+              backgroundColor:Colors.red,
+              ),
+              );
+      return;
+    }
+    if(textEditingController.text.isEmpty){
+        ScaffoldMessenger.of(
+        context).showSnackBar(
+          const SnackBar(
+            content: TextWidget(
+              label: "Por favor escriba un mensaje",
+              ),
+              backgroundColor:Colors.red,
+              ),
+              );
+      return;
+    }
     try{
+      String msg = textEditingController.text;
           // log("se ha mandado con exito la respuesta");
       setState(() {
         _isTyping=true;
         // chatList.add(ChatModel(msg: textEditingController.text,chatIndex: 0));
-        chatProvider.addUserMessage(msg: textEditingController.text);
+        chatProvider.addUserMessage(msg: msg);
         textEditingController.clear();
         focusNode.unfocus();
       });
       await chatProvider.sendMessageAndGetAnswers(
-        msg: textEditingController.text,
+        msg: msg,
         choosenModelId: modelsProvider.getCurrentModel);
       // chatList.addAll(
       //   await ApiService.sendMessage(
@@ -170,6 +198,15 @@ class _IaState extends State<Ia> {
       setState(() {});
     }catch(error){
       log("error $error");
+      ScaffoldMessenger.of(
+        context).showSnackBar(
+          SnackBar(
+            content: TextWidget(
+              label: error.toString(),
+              ),
+              backgroundColor:Colors.red,
+              ),
+              );
     }finally{
       setState(() {
         scrollListToEND();
