@@ -64,13 +64,13 @@ class ChhatWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(FontAwesomeIcons.thumbsUp,
-                    color: Colors.white,
+                    color: Colors.black,
                     ),
                     SizedBox(
                       width: 5,
                     ),
                     Icon(FontAwesomeIcons.thumbsDown,
-                    color: Colors.white,
+                    color: Colors.black,
                     ),
                   ],
                  )

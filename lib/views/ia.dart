@@ -134,9 +134,11 @@ class _IaState extends State<Ia> {
                       IconButton(
                         onPressed: ()async {
                           await sendMessageFCT(
-                            modelsProvider: modelsProvider,chatProvider: chatProvider);
+                            modelsProvider: modelsProvider,
+                            chatProvider: chatProvider);
                         },
-                      icon: const Icon(FontAwesomeIcons.paperPlane,))
+                      icon: const Icon(
+                        FontAwesomeIcons.paperPlane,))
                     ],
                   ),
                 ),
@@ -147,7 +149,10 @@ class _IaState extends State<Ia> {
     );
   }
   void scrollListToEND(){
-    _listScrollController.animateTo(_listScrollController.position.maxScrollExtent, duration: const Duration(seconds: 2), curve: Curves.easeOut);
+    _listScrollController.animateTo(
+      _listScrollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 2),
+      curve: Curves.easeOut);
   }
   Future<void> sendMessageFCT (
     {ModelsProvider modelsProvider,
