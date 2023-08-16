@@ -5,6 +5,7 @@ import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/constants/constants.dart';
 import 'package:recet_iav2/services/assets_manager.dart';
 import 'package:recet_iav2/views/widgets/text_widget.dart';
+
 class ChhatWidget extends StatelessWidget {
   const ChhatWidget({Key key, this.msg, this.chatIndex, }) : super(key: key);
 
