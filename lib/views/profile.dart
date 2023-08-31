@@ -50,8 +50,8 @@ class Profil extends StatelessWidget {
                 'Charlotte',
                 style: TextStyle(fontSize: 18, color: font,fontFamily: 'ro'),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Divider(
                   height: 40,
                   thickness: 2,
@@ -75,7 +75,7 @@ class Profil extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(titls[index]),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp,
+                      trailing: const Icon(Icons.arrow_forward_ios_sharp,
                       size: 15,
                       ),
                   );

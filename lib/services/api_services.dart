@@ -13,7 +13,9 @@ class ApiService{
         //bendito error de quitarle la interpolacion y ponerlo en camellcase
         Uri.parse("$baseUrl/models"),
         headers: {
-        'Authorization':'Bearer $apiKey'},
+          //descomentar eso cuando hayas copiado la apikey otra vez
+        // 'Authorization':'Bearer $apiKey'
+        },
       );
 
       Map jsonResponse = jsonDecode(response.body);
@@ -41,7 +43,8 @@ class ApiService{
         //bendito error de quitarle la interpolacion y ponerlo en camellcase
         Uri.parse("$baseUrl/completions"),
         headers: {
-        'Authorization':'Bearer $apiKey',
+          //descomentar eso cuando hayas copiado la apikey otra vez
+        // 'Authorization':'Bearer $apiKey',
         'Content-Type':'application/json'
         },
         body: jsonEncode({

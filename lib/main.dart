@@ -4,6 +4,7 @@ import 'package:recet_iav2/providers/chats_provider.dart';
 import 'package:recet_iav2/providers/models_provider.dart';
 import 'package:recet_iav2/views/home.dart';
 import 'package:recet_iav2/views/recipe_details.dart';
+import 'package:recet_iav2/views/singin_screen.dart';
 import 'package:recet_iav2/views/splash.dart';
 
 import 'consent/navigation.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           create: (_)=> ChatProvider(),
         ),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         // title: 'RecetIA',
         debugShowCheckedModeBanner: false,
         // theme: ThemeData(        
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
         //     bodyText2: TextStyle(color: Colors.white),
         //   ),
         // ),
-        home: Navigation(),
+        //home: Navigation()
+        home: SingInScreen(),
       ),
     );
   }
