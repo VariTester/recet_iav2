@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recet_iav2/views/widgets/reusable_widget.dart';
+import 'package:recet_iav2/views/widgets/text_widget.dart';
 
 import '../consent/colors.dart';
 import '../consent/navigation.dart';
@@ -12,9 +16,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _userTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _userTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +48,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: const EdgeInsets.fromLTRB(
               20, 120, 20, 0),
                 child: Column(
                   children: <Widget>[
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Ingrese su Contraseña", Icons.person_outline,false, _userTextController),
+                    reusableTextField("Ingrese su nombre de Usuario", Icons.person_outline,false, _userTextController),
                     const SizedBox(
                       height: 20,
                     ),
@@ -59,13 +63,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Ingrese su contraseña", Icons.lock_clock_outlined,true, _emailTextController),
+                    reusableTextField("Ingrese su contraseña", Icons.lock_clock_outlined,true, _passwordTextController),
                     const SizedBox(
                       height: 20,
                     ),
                     sinInSignUpButtom(context, false, (){
-                      Navigator.push(context,
-                        MaterialPageRoute(builder:(context) => Navigation()));
+                      FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text)
+                      .then((value){
+                        ScaffoldMessenger.of(
+                        context).showSnackBar(
+                        SnackBar(
+                        content: TextWidget(
+                        // label: error.toString(),
+                        label: "Te has regisitrado con éxito",
+                          ),
+                      backgroundColor:Color.fromARGB(255, 99, 235, 99),
+              ),
+              );
+                          Navigator.push(context,
+                          MaterialPageRoute(builder:(context) => const Navigation()));
+                        }).onError((error, stackTrace) {
+                          log("error $error");
+                       ScaffoldMessenger.of(
+                        context).showSnackBar(
+                        SnackBar(
+                        content: TextWidget(
+                        label: error.toString(),
+                          ),
+                      backgroundColor:Colors.red,
+              ),
+              );
+                        });
                     })
                   ],
                 ),

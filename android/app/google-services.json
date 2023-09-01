@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210382666779",
+    "project_id": "recetia-v2",
+    "storage_bucket": "recetia-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210382666779:android:170d7adaefdc2cd3b8ccbe",
+        "android_client_info": {
+          "package_name": "com.example.recet_iav2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210382666779-oqi3ba85l549rrg3ec2tpvkdhrhv0hq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnaLLx2R-8zjNAvtG2ESlCb7l0TxuhExk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210382666779-oqi3ba85l549rrg3ec2tpvkdhrhv0hq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

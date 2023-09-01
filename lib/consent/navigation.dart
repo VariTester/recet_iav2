@@ -8,7 +8,7 @@ import 'package:recet_iav2/views/profile.dart';
 import 'package:recet_iav2/views/search.dart';
 
 class Navigation extends StatefulWidget {
-  const Navigation({Key key}) : super(key: key);
+  const Navigation({ Key key}) : super(key: key);
 
   @override
   State<Navigation> createState() => _NavigationState();

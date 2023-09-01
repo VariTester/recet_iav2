@@ -1,7 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/views/singup_screen.dart';
 import 'package:recet_iav2/views/widgets/reusable_widget.dart';
+import 'package:recet_iav2/views/widgets/text_widget.dart';
+
+import '../consent/navigation.dart';
 
 class SingInScreen extends StatefulWidget {
   const SingInScreen({Key key}) : super(key: key);
@@ -61,6 +67,26 @@ class _SingInScreenState extends State<SingInScreen> {
                   height: 30,
                 ),
                 sinInSignUpButtom(context, true, (){
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text)
+                    .then((value) {
+                      Navigator.push(context,
+                      MaterialPageRoute(builder:((context) => const Navigation())));
+                    }).onError((error, stackTrace) {
+                      log("error $error");
+                       ScaffoldMessenger.of(
+                        context).showSnackBar(
+                        SnackBar(
+                        content: TextWidget(
+                        // label: error.toString(),
+                        label: "Usuario o contraseña incorrecta :ps",
+                          ),
+                      backgroundColor:Colors.red,
+              ),
+              );
+                    });
+                    
                 }),
                 signUpOption()
           ],

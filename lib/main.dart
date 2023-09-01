@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recet_iav2/providers/chats_provider.dart';
@@ -9,7 +10,9 @@ import 'package:recet_iav2/views/splash.dart';
 
 import 'consent/navigation.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); 
    // derepente borrar esto el const
   runApp( MyApp());
 }
