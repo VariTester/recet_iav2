@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recet_iav2/consent/colors.dart';
+import 'package:recet_iav2/views/singin_screen.dart';
 class Profil extends StatelessWidget {
    Profil({Key key}) : super(key: key);
 
@@ -61,23 +62,46 @@ class Profil extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: Container(
-                      width: 37,
-                      height: 37,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: icons[index],
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(titls[index]),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios_sharp,
-                      size: 15,
-                      ),
+                  return InkWell(
+                    onTap: () {
+                      switch (index) {
+                        case 0:
+                        Navigator.pushNamed(context, '/datos_personales');
+                        break;
+                        case 1:
+                        Navigator.pushNamed(context, '/ajustes');
+                        break;
+                        case 2:
+                        Navigator.pushNamed(context, '/cafe');
+                        break;
+                        case 3:
+                        Navigator.pushNamed(context, '/acerca_de_nosotros');
+                        break;
+                        case 4:
+                        Navigator.pushNamed(context, '/logout');
+                        break;
+                      }
+
+                      // Navigator.push(context, MaterialPageRoute(builder: ((context) => const SingInScreen())));
+                    },
+                    child: ListTile(
+                      leading: Container(
+                        width: 37,
+                        height: 37,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: icons[index],
+                        ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(titls[index]),
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp,
+                        size: 15,
+                        ),
+                    ),
                   );
                 },
               ),

@@ -17,8 +17,8 @@ class SingInScreen extends StatefulWidget {
 }
 
 class _SingInScreenState extends State<SingInScreen> {
- TextEditingController _passwordTextController =TextEditingController();
- TextEditingController _emailTextController =TextEditingController(); 
+ final TextEditingController _passwordTextController =TextEditingController();
+ final TextEditingController _emailTextController =TextEditingController(); 
  @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +79,8 @@ class _SingInScreenState extends State<SingInScreen> {
                         context).showSnackBar(
                         SnackBar(
                         content: TextWidget(
-                        // label: error.toString(),
-                        label: "Usuario o contraseña incorrecta :ps",
+                        label: error.toString(),
+                        // label: "Usuario o contraseña incorrecta :p",
                           ),
                       backgroundColor:Colors.red,
               ),
