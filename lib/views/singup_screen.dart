@@ -16,9 +16,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _passwordTextController = TextEditingController();
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _userTextController = TextEditingController();
+  // final TextEditingController _passwordTextController = TextEditingController();
+  // final TextEditingController _emailTextController = TextEditingController();
+  // final TextEditingController _userTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,60 +47,73 @@ class _SignUpScreenState extends State<SignUpScreen> {
           )
         ),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              20, 120, 20, 0),
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    reusableTextField("Ingrese su nombre de Usuario", Icons.person_outline,false, _userTextController),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    reusableTextField("Ingrese su Email", Icons.person_outline,false, _emailTextController),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    reusableTextField("Ingrese su contraseña", Icons.lock_clock_outlined,true, _passwordTextController),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    sinInSignUpButtom(context, false, (){
-                      FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text)
-                      .then((value){
-                        ScaffoldMessenger.of(
-                        context).showSnackBar(
-                        SnackBar(
-                        content: TextWidget(
-                        // label: error.toString(),
-                        label: "Te has regisitrado con éxito",
-                          ),
-                      backgroundColor:Color.fromARGB(255, 99, 235, 99),
-              ),
-              );
-                          Navigator.push(context,
-                          MaterialPageRoute(builder:(context) => const Navigation()));
-                        }).onError((error, stackTrace) {
-                          log("error $error");
-                       ScaffoldMessenger.of(
-                        context).showSnackBar(
-                        SnackBar(
-                        content: TextWidget(
-                        label: error.toString(),
-                          ),
-                      backgroundColor:Colors.red,
-              ),
-              );
-                        });
-                    })
-                  ],
-                ),
-                ),),
+        child: Form(
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // TextFormField(
+              //   decoration: const InputDecoration(
+              //     label: Text(data)),
+              // )
+            ],
+          )
+          ),
+        //   child: Padding(
+        //     padding: const EdgeInsets.fromLTRB(
+        //       20, 120, 20, 0),
+        //         child: Column(
+        //           children: <Widget>[
+        //             const SizedBox(
+        //               height: 20,
+        //             ),
+        //             reusableTextField("Ingrese su nombre de Usuario", Icons.person_outline,false, _userTextController),
+        //             const SizedBox(
+        //               height: 20,
+        //             ),
+        //             reusableTextField("Ingrese su Email", Icons.person_outline,false, _emailTextController),
+        //             const SizedBox(
+        //               height: 20,
+        //             ),
+        //             reusableTextField("Ingrese su contraseña", Icons.lock_clock_outlined,true, _passwordTextController),
+        //             const SizedBox(
+        //               height: 20,
+        //             ),
+        //             sinInSignUpButtom(context, false, (){
+        //               FirebaseAuth.instance
+        //               .createUserWithEmailAndPassword(
+        //                 email: _emailTextController.text,
+        //                 password: _passwordTextController.text)
+        //               .then((value){
+        //                 ScaffoldMessenger.of(
+        //                 context).showSnackBar(
+        //                 SnackBar(
+        //                 content: TextWidget(
+        //                 // label: error.toString(),
+        //                 label: "Te has regisitrado con éxito",
+        //                   ),
+        //               backgroundColor:Color.fromARGB(255, 99, 235, 99),
+        //       ),
+        //       );
+        //                   Navigator.push(context,
+        //                   MaterialPageRoute(builder:(context) => const Navigation()));
+        //                 }).onError((error, stackTrace) {
+        //                   log("error $error");
+        //                ScaffoldMessenger.of(
+        //                 context).showSnackBar(
+        //                 SnackBar(
+        //                 content: TextWidget(
+        //                 label: error.toString(),
+        //                   ),
+        //               backgroundColor:Colors.red,
+        //       ),
+        //       );
+        //                 });
+        //             })
+        //           ],
+        //         ),
+        //         ),),
+      ),
       ),
     );
   }

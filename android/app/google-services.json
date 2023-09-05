@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "210382666779",
+    "firebase_url": "https://recetia-v2-default-rtdb.firebaseio.com",
     "project_id": "recetia-v2",
     "storage_bucket": "recetia-v2.appspot.com"
   },

@@ -3,17 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recet_iav2/providers/chats_provider.dart';
 import 'package:recet_iav2/providers/models_provider.dart';
-import 'package:recet_iav2/views/home.dart';
+// import 'package:recet_iav2/views/home.dart';
 import 'package:recet_iav2/views/ia.dart';
-import 'package:recet_iav2/views/recipe_details.dart';
+import 'package:recet_iav2/views/prueba.dart';
+// import 'package:recet_iav2/views/recipe_details.dart';
 import 'package:recet_iav2/views/singin_screen.dart';
-import 'package:recet_iav2/views/splash.dart';
+import 'package:recet_iav2/views/singup_screen.dart';
+// import 'package:recet_iav2/views/splash.dart';
+
+// import 'consent/navigation.dart';
 
 import 'consent/navigation.dart';
+import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+
+  ); 
    // derepente borrar esto el const
   runApp( MyApp());
 }
@@ -49,8 +58,10 @@ class MyApp extends StatelessWidget {
         //     bodyText2: TextStyle(color: Colors.white),
         //   ),
         // ),
-        //home: Navigation()
-        home: const SingInScreen(),
+        // home: const Navigation()
+        // home: const SingInScreen(),
+        home: const SignUpScreen(),
+        // home: const Prueba(),
       ),
     );
   }

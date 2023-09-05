@@ -1,11 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recet_iav2/consent/colors.dart';
-import 'package:recet_iav2/views/singin_screen.dart';
-class Profil extends StatelessWidget {
-   Profil({Key key}) : super(key: key);
+
+// import 'package:recet_iav2/views/singin_screen.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+
+//servicios
+// import 'package:recet_iav2/services/firebase_service.dart';
+
+class Profil extends StatefulWidget {
+   const Profil({Key key}) : super(key: key);
 
   @override
+  State<Profil> createState() => _ProfilState();
+}
+
+class _ProfilState extends State<Profil> {
   List<Icon> icons = [
     Icon(FontAwesomeIcons.user, color: maincolor),
     Icon(FontAwesomeIcons.cogs, color: maincolor),
@@ -21,12 +32,17 @@ class Profil extends StatelessWidget {
     'Acerca de nosotros',
     'Logout'
   ];
+
+  // const userId = FirebaseAuth().currentUser.uid;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(child: Column(
         children: [
-          SizedBox(height: 30),
+
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -104,10 +120,14 @@ class Profil extends StatelessWidget {
                     ),
                   );
                 },
+                
               ),
+
         ],
       ),
+      
       ),
+      
     );
   }
 }
