@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
         //   ),
         // ),
         // home: const Navigation()
-        // home: const SingInScreen(),
-        home: const SignUpScreen(),
+        home: const SingInScreen(),
+        // home: const SignUpScreen(),
         // home: const Prueba(),
       ),
     );
