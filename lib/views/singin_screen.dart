@@ -49,7 +49,7 @@ class _SingInScreenState extends State<SingInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField(
+                reusableUserTextField(
                   "Ingresa tu usuario",
                   Icons.person_outline,
                   false,
@@ -58,7 +58,7 @@ class _SingInScreenState extends State<SingInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField(
+                reusableEmailTextField(
                   "Ingresa tu contraseña",
                   Icons.lock_outline,
                   true,
