@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/views/widgets/text_box.dart';
 
@@ -18,11 +23,131 @@ class _ProfilePageState extends State<ProfilePage> {
   //user
   final currentUser = FirebaseAuth.instance.currentUser;
 
+  //all users
+  final usersCollection = FirebaseFirestore.instance.collection('users');
 
 
-  //edit field
-  Future<void> editField()async{
 
+  //edit field Usuario
+  Future<void>editUserField(String field)async{
+    String newValue ="";
+    await showDialog(
+      context: context,
+      builder: (context)=> AlertDialog(
+        backgroundColor: Colors.grey[900],
+        title: Text(
+          "Editar $field",
+          style: const TextStyle(color: Colors.white),
+          ),
+          content: TextFormField(
+            autofocus: true,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: "Ingresar nuevo $field",
+              hintStyle: const TextStyle(color: Colors.grey),
+              
+            ),
+            
+            onChanged: (value) {
+              newValue = value;
+            },
+            inputFormatters: [
+          LengthLimitingTextInputFormatter(20),
+          FilteringTextInputFormatter.allow(RegExp(r'[aA-zZ ]')),
+          FilteringTextInputFormatter.deny(RegExp(r'[0-9]')),
+          FilteringTextInputFormatter.deny(RegExp(r'[_]')) 
+            ],
+            // validator: (value) {
+              
+            // },
+          ),
+          actions: [
+            //cancel button
+            TextButton(
+              child: Text('Cancelar', style: TextStyle(color: Colors.white),),
+              onPressed: () => Navigator.pop(context),
+            ),
+            //save button
+              TextButton(
+              child: Text('Guardar', style: TextStyle(color: Colors.white),),
+              onPressed: () => Navigator.of(context).pop(newValue),
+            )
+          ],
+      ),
+      );
+      //updating in firestore
+      if(newValue.trim().isNotEmpty){
+        //only update if there is something in the textfieild
+        await usersCollection.doc(currentUser.uid).update({field:newValue});
+      }else{
+            ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('No ingresaste tu nuevo nombre'),
+            behavior: SnackBarBehavior.floating, // Establece el comportamiento como flotante
+            margin: EdgeInsets.only(bottom: 80.0),
+            backgroundColor: Colors.red,
+            )
+          );
+
+      }
+  }
+  // editar numero
+    Future<void>editNumberField(String field)async{
+    String newValue ="";
+    await showDialog(
+      context: context,
+      builder: (context)=> AlertDialog(
+        backgroundColor: Colors.grey[900],
+        title: Text(
+          "Editar $field",
+          style: const TextStyle(color: Colors.white),
+          ),
+          content: TextFormField(
+            autofocus: true,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: "Ingresar nuevo $field",
+              hintStyle: const TextStyle(color: Colors.grey),
+              
+            ),
+            
+            onChanged: (value) {
+              newValue = value;
+            },
+              keyboardType: TextInputType.number, // Configura el teclado para números
+              inputFormatters: [
+              LengthLimitingTextInputFormatter(9), // Limita la longitud a 9 caracteres
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Permite solo dígitos
+            ],
+          ),
+          actions: [
+            //cancel button
+            TextButton(
+              child: Text('Cancelar', style: TextStyle(color: Colors.white),),
+              onPressed: () => Navigator.pop(context),
+            ),
+            //save button
+              TextButton(
+              child: Text('Guardar', style: TextStyle(color: Colors.white),),
+              onPressed: () => Navigator.of(context).pop(newValue),
+            )
+          ],
+      ),
+      );
+      //updating in firestore
+      if(newValue.trim().isNotEmpty){
+        if(newValue.trim().length==9){
+          //only update if there is something in the textfieild
+        await usersCollection.doc(currentUser.uid).update({field:newValue});
+        }
+      }else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Debes ingresar 9 números'),
+            behavior: SnackBarBehavior.floating, // Establece el comportamiento como flotante
+            margin: EdgeInsets.only(bottom: 80.0),
+            backgroundColor: Colors.red,
+            )
+          );
+        }
   }
 
   @override
@@ -106,8 +231,8 @@ class _ProfilePageState extends State<ProfilePage> {
 //userName
         MyTextBox(
           userName: userData != null ? userData['name'] : '', // Verifica si userData es null
-          textUserName: 'name',
-          onPressed: () => editField(),
+          textUserName: 'Nombre',
+          onPressed: () => editUserField('name'),
         ),
 
 
@@ -115,8 +240,8 @@ class _ProfilePageState extends State<ProfilePage> {
           //userName
         MyTextBox(
           userName: userData != null ? userData['phone'] : '', // Verifica si userData es null
-          textUserName: 'phone',
-          onPressed: () => editField(),
+          textUserName: 'Celular',
+          onPressed: () => editNumberField('phone'),
         ),
 
           //   MyTextBox(

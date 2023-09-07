@@ -47,8 +47,9 @@ class MyTextBox extends StatelessWidget {
                 Text(userName,
                 style:TextStyle(color: Colors.grey[800]),
                 ),
-                              IconButton(
-                  onPressed: (){},
+
+                  IconButton(
+                  onPressed: onPressed,
                   icon: Icon(Icons.settings,
                   color: Colors.grey[600],
                   ))
