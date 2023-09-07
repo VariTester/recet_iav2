@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,8 +65,8 @@ class _ProfilState extends State<Profil> {
           ),
               SizedBox(height: 10),
               Text(
-                'Charlotte',
-                style: TextStyle(fontSize: 18, color: font,fontFamily: 'ro'),
+                "Charlotte" // Espera a que se obtenga el nombre desde Firestore
+                // style: TextStyle(fontSize: 18, color: font, fontFamily: 'ro'),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -131,3 +132,17 @@ class _ProfilState extends State<Profil> {
     );
   }
 }
+
+// Future<String> getNameFromFirestore() async {
+//   final userId = FirebaseAuth.instance.currentUser.uid;
+
+//   final userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+//   if (userDoc.exists) {
+//     final userData = userDoc.data() as Map<String, dynamic>;
+//     final name = userData['name'] as String;
+//     return name;
+//   } else {
+//     return 'Nombre no encontrado'; // Puedes manejar este caso según tus necesidades
+//   }
+// }

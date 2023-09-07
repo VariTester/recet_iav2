@@ -102,6 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 );
                           });
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const SingInScreen()));
                             });
       
                 //                                 FirebaseAuth.instance
