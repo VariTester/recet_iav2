@@ -5,6 +5,7 @@ import 'package:recet_iav2/providers/chats_provider.dart';
 import 'package:recet_iav2/providers/models_provider.dart';
 // import 'package:recet_iav2/views/home.dart';
 import 'package:recet_iav2/views/ia.dart';
+import 'package:recet_iav2/views/profile.dart';
 import 'package:recet_iav2/views/prueba.dart';
 // import 'package:recet_iav2/views/recipe_details.dart';
 import 'package:recet_iav2/views/singin_screen.dart';
@@ -58,8 +59,9 @@ class MyApp extends StatelessWidget {
         //     bodyText2: TextStyle(color: Colors.white),
         //   ),
         // ),
-        // home: const Navigation()
-        home: const SingInScreen(),
+        // home: const Profil(),
+        home: const Navigation()
+        // home: const SingInScreen(),
         // home: const SignUpScreen(),
         // home: const Prueba(),
       ),

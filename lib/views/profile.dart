@@ -65,8 +65,8 @@ class _ProfilState extends State<Profil> {
           ),
               SizedBox(height: 10),
               Text(
-                "Charlotte" // Espera a que se obtenga el nombre desde Firestore
-                // style: TextStyle(fontSize: 18, color: font, fontFamily: 'ro'),
+                'Charlotte',
+                style: TextStyle(fontSize: 18, color: font,fontFamily: 'ro'),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -133,16 +133,18 @@ class _ProfilState extends State<Profil> {
   }
 }
 
-// Future<String> getNameFromFirestore() async {
-//   final userId = FirebaseAuth.instance.currentUser.uid;
-
-//   final userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-//   if (userDoc.exists) {
-//     final userData = userDoc.data() as Map<String, dynamic>;
-//     final name = userData['name'] as String;
-//     return name;
-//   } else {
-//     return 'Nombre no encontrado'; // Puedes manejar este caso según tus necesidades
+// Future <String> getNameFromFirestore(String UserId)async{
+//  try{
+//    final userDoc = await FirebaseFirestore.instance.collection('users').doc(UserId).get();
+//     // Verificar si el documento existe y contiene el campo 'name'
+//     if (userDoc.exists && userDoc.data() != null && userDoc.data()['name'] != null) {
+//       return userDoc.data()['name']; // Obtener el valor del campo 'name'
+//     } else {
+//       return 'Nombre no encontrado'; // Manejar el caso en que el campo 'name' no esté presente
+//     }
+//  } catch (e) {
+//     // Manejar cualquier error que pueda ocurrir al interactuar con Firestore
+//     print('Error al obtener el nombre desde Firestore: $e');
+//     return 'Error de Firestore';
 //   }
 // }

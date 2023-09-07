@@ -3,7 +3,10 @@ import 'package:recet_iav2/consent/appbar.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/main.dart';
 import 'package:recet_iav2/views/detail_page.dart';
+import 'package:recet_iav2/views/profile_page.dart';
 import 'package:recet_iav2/views/recipe_details.dart';
+import 'package:recet_iav2/views/singin_screen.dart';
+import 'package:recet_iav2/views/widgets/drawer.dart';
 import 'package:recet_iav2/views/widgets/recipe_card.dart';
 
 import '../models/recipe.api.dart';
@@ -42,6 +45,30 @@ class _HomePageState extends State<HomePage> {
     // print(_recipes);
   }
 
+  void goToProfilePage(){
+    //pop menu drawer
+    Navigator.pop(context);
+
+    //go to profile page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context)=> const ProfilePage(),
+      ),
+    );
+  }
+    void signOut(){
+    //pop menu drawer
+    Navigator.pop(context);
+
+    //go to profile page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context)=> const SingInScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +79,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: background,
 
       appBar: appBar(),
+      
+
+      drawer:  MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
+      ),
 
      //codigo del otro videoooo
 
