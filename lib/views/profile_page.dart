@@ -138,6 +138,14 @@ class _ProfilePageState extends State<ProfilePage> {
         if(newValue.trim().length==9){
           //only update if there is something in the textfieild
         await usersCollection.doc(currentUser.uid).update({field:newValue});
+        }else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Debes ingresar 9 números'),
+            behavior: SnackBarBehavior.floating, // Establece el comportamiento como flotante
+            margin: EdgeInsets.only(bottom: 80.0),
+            backgroundColor: Colors.red,
+            )
+          );
         }
       }else {
           ScaffoldMessenger.of(context).showSnackBar(

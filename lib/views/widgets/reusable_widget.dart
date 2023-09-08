@@ -5,8 +5,8 @@ Image logoWidget(String imageName){
     return Image.asset(
       imageName,
       fit: BoxFit.fitWidth,
-      width: 240,
-      height: 240,
+      width: 210,
+      height: 210,
       // color: Colors.white,
     );
   }

@@ -50,7 +50,7 @@ class _SingInScreenState extends State<SingInScreen> {
                   height: 30,
                 ),
                 reusableEmailTextField(
-                  "Ingresa tu usuario",
+                  "Ingresa tu correo electrónico",
                   Icons.person_outline,
                   false,
                   _emailTextController),
