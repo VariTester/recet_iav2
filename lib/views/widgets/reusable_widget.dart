@@ -45,7 +45,7 @@ Image logoWidget(String imageName){
           : TextInputType.emailAddress,
           inputFormatters: [
           LengthLimitingTextInputFormatter(40),
-          FilteringTextInputFormatter.allow(RegExp(r'[0aA-zZ9@._-]'))
+          FilteringTextInputFormatter.allow(RegExp(r'[012345678aA-zZ9@._-]'))
           ],
           validator: (value) {
       if (value.isEmpty) {
@@ -146,7 +146,7 @@ Image logoWidget(String imageName){
           onTap();
         },
         child: Text(
-          isLogin ? 'LOG IN' : 'SING UP',
+          isLogin ? 'Entrar' : 'Registrarse',
           style: const TextStyle(
             color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16
           ),

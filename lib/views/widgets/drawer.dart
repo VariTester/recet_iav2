@@ -39,13 +39,13 @@ class MyDrawer extends StatelessWidget {
 
           MyListTile(
             icon:Icons.home,
-            text: 'Home',
+            text: 'Inicio',
             onTap: () => Navigator.pop(context)),
 
             //profile list file
            MyListTile(
             icon:Icons.person,
-            text: 'Profile',
+            text: 'Perfil',
             onTap: onProfileTap),
 
           ],
@@ -56,7 +56,7 @@ class MyDrawer extends StatelessWidget {
                padding: const EdgeInsets.only(bottom:25.0),
                child: MyListTile(
             icon:Icons.logout,
-            text: 'Logout',
+            text: 'Salir',
             onTap: onSignOut
             ),
              ),
