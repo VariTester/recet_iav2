@@ -5,11 +5,11 @@ import 'package:recet_iav2/providers/chats_provider.dart';
 import 'package:recet_iav2/providers/models_provider.dart';
 // import 'package:recet_iav2/views/home.dart';
 import 'package:recet_iav2/views/ia.dart';
-import 'package:recet_iav2/views/profile.dart';
-import 'package:recet_iav2/views/prueba.dart';
+// import 'package:recet_iav2/views/profile.dart';
+// import 'package:recet_iav2/views/prueba.dart';
 // import 'package:recet_iav2/views/recipe_details.dart';
 import 'package:recet_iav2/views/singin_screen.dart';
-import 'package:recet_iav2/views/singup_screen.dart';
+// import 'package:recet_iav2/views/singup_screen.dart';
 // import 'package:recet_iav2/views/splash.dart';
 
 // import 'consent/navigation.dart';

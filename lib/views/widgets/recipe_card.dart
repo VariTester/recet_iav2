@@ -1,18 +1,120 @@
-import 'package:flutter/material.dart';
-import 'package:recet_iav2/consent/colors.dart';
+// import 'dart:html';
 
-class RecipeCard extends StatelessWidget {
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recet_iav2/consent/colors.dart';
+import 'package:recet_iav2/views/widgets/like_button.dart';
+
+// import 'package:recet_iav2/views/widgets/like_button.dart';
+
+class RecipeCard extends StatefulWidget {
+
+  // final String user;
+  //una lista de las recetas que te gustan  
+  // final List<String> likes;
+  
+  //del otro video
+  final String recipeId;
   final String title;
   final String rating;
   final String cookTime;
   final String thumbnailUrl;
-  final void Function() onTap;
-  RecipeCard({
-    @required this.title,
-    @required this.cookTime,
-    @required this.rating,
-    @required this.thumbnailUrl, this.onTap,
+  final void Function(String) onTap;
+  const RecipeCard({Key key,
+    // @required this.user,
+    // @required this.likes,
+    
+     this.recipeId,
+     this.title,
+     this.cookTime,
+     this.rating,
+     this.thumbnailUrl, this.onTap,
+  }) : super(key: key);
+
+  @override
+  State<RecipeCard> createState() => _RecipeCardState();
+}
+
+class _RecipeCardState extends State<RecipeCard> {
+
+  //vamos a obtener el usuario de firebase
+  final currentUser = FirebaseAuth.instance.currentUser;
+  bool isLiked = false;
+  
+  // @override
+  // void initState() {
+
+  //   super.initState();
+  //   isLiked = widget.likes.contains(currentUser.email);
+  // }
+
+  //toggle like
+  // void addLike(String recipeId){
+  //   DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+
+  //   userRef.update({
+  //     'likes':FieldValue.arrayUnion([recipeId])
+  //   });
+  // }
+
+  // void toggleLike(String recipeId){
+  //   setState(() {
+  //     isLiked = !isLiked;
+      
+  //   });
+
+
+  //   if(isLiked){
+  //      DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+  //      userRef.update({
+  //     'likes':FieldValue.arrayUnion([recipeId])
+  //   });
+  //   }
+
+
+
+
+  // }
+
+  void addLike(String recipeId) async{
+  setState(() {
+    isLiked = !isLiked;
   });
+    // Obtén una referencia al documento del usuario actual
+  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+  // DocumentReference postRef = FirebaseFirestore.instance.collection('users').doc(widget.recipeId);
+
+  if(isLiked){
+      // Agregar el ID de la receta a la lista de "likes" del usuario
+      await userRef.update({'likes.$recipeId' :true});
+      // postRef.update({
+      //   'likes': FieldValue.arrayUnion([currentUser.email]),
+      // });
+
+
+      
+      
+  // await userRef.update({
+  //   // 'likes': FieldValue.arrayUnion([recipeId]),
+  //   // 'likes': FieldValue.arrayUnion([currentUser.email]),
+    
+  // });
+  // print(recipeId);
+  }else{
+      // Quitar el ID de la receta de la lista de "likes" del usuario
+      await userRef.update({
+        'likes.$recipeId': FieldValue.delete(),
+        
+      });
+
+  }
+
+}
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -20,7 +122,7 @@ class RecipeCard extends StatelessWidget {
   if (oracion.length <= maxLetras) {
     return oracion;
   } else {
-    return oracion.substring(0, maxLetras) + '...';
+    return '${oracion.substring(0, maxLetras)}...';
   }
 }
 
@@ -32,7 +134,7 @@ return Container(
 
     color: Colors.white,
 
-    boxShadow: [
+    boxShadow: const [
 
       BoxShadow(
 
@@ -64,9 +166,21 @@ return Container(
 
           mainAxisAlignment: MainAxisAlignment.end,
 
-          children: [
-
-            Icon(Icons.favorite_border),
+          children:  [
+            Column(
+              children: [
+                LikeButton(
+                  isLiked: isLiked,
+                  //gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                  onTap: () {
+                    addLike(widget.recipeId);
+                  },
+                  
+                ),
+                
+              ],
+            )
+          
 
           ],
 
@@ -88,7 +202,7 @@ return Container(
 
             image: DecorationImage(
 
-              image: NetworkImage(thumbnailUrl),
+              image: NetworkImage(widget.thumbnailUrl),
 
               fit: BoxFit.cover,
 
@@ -110,7 +224,7 @@ return Container(
 
         child: Text(
 
-          limitarLongitud(title, 35), // Limitar el título a 5 letras
+          limitarLongitud(widget.title, 35), // Limitar el título a 5 letras
 
           textAlign: TextAlign.center,
 
@@ -138,7 +252,7 @@ return Container(
 
           Text(
 
-            cookTime,
+            widget.cookTime,
 
             style: TextStyle(
 
@@ -160,7 +274,7 @@ return Container(
 
               Text(
 
-                rating,
+                widget.rating,
 
                 style: TextStyle(
 

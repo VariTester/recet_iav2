@@ -7,15 +7,19 @@ class Recipe{
   final String images;
   final double rating;
   final String totalTime;
+  final String recipeId;
 
-  Recipe({this.name,this.images,this.rating,this.totalTime});
+  Recipe({this.name,this.images,this.rating,this.totalTime
+  ,this.recipeId
+  });
 
   factory Recipe.fromJson(dynamic json){
     return Recipe(
       name: json['name'] as String,
       images: json['images'][0]['hostedLargeUrl'] as String,
       rating: json['rating'] as double,
-      totalTime: json['totalTime'] as String
+      totalTime: json['totalTime'] as String,
+      recipeId:json['recipeId'] as String
     );
   }
 
@@ -30,6 +34,6 @@ class Recipe{
 
   @override 
   String toString(){
-    return 'Recipe{name: $name, image: $images, rating: $rating, totalTime: $totalTime}';
+    return 'Recipe{name: $name, image: $images, rating: $rating, totalTime: $totalTime, recipeId: $recipeId}';
   }
 }

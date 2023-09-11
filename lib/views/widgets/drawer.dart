@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recet_iav2/views/widgets/my_list_tile.dart';
 
 import '../../consent/colors.dart';
+import '../../consent/navigation.dart';
 
 class MyDrawer extends StatelessWidget {
   final void Function() onProfileTap;
@@ -40,7 +41,16 @@ class MyDrawer extends StatelessWidget {
           MyListTile(
             icon:Icons.home,
             text: 'Inicio',
-            onTap: () => Navigator.pop(context)),
+            onTap: () => 
+            Navigator.push(context,
+          MaterialPageRoute(
+            builder: (context)=> const Navigation(),
+          ),
+        )
+            
+            ),
+
+            
 
             //profile list file
            MyListTile(

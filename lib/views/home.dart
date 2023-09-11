@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:recet_iav2/consent/appbar.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/main.dart';
@@ -20,6 +23,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //user
+  final currentUser = FirebaseAuth.instance.currentUser;
+  //text controller
+  // final textController = TextEditingController();
 
   int indexOntap = 0;
   //parte del codigo de abajo del popular
@@ -37,12 +44,19 @@ class _HomePageState extends State<HomePage> {
     getRecipes();
   }
 
+  //aqui trato de obtener los likes
+  void getLikes(){
+    FirebaseFirestore.instance.collection('user').add({
+      'Likes':[],
+    });
+  }
+
   Future<void> getRecipes() async{
     _recipes = await RecipeApi.getRecipe();
     setState(() {
       _isLoading = false;
     });
-    // print(_recipes);
+    print(_recipes);
   }
 
   void goToProfilePage(){
@@ -186,9 +200,10 @@ class _HomePageState extends State<HomePage> {
     SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20), // Espacio de relleno alrededor del GridView.builder
       sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          // Número de columnas en el GridView
           crossAxisCount: 2, 
-          mainAxisExtent: 300,// Número de columnas en el GridView
+          mainAxisExtent: 300,
           // mainAxisSpacing: 10.0, // Espacio entre elementos en el eje principal (vertical)
           crossAxisSpacing: 10, // Espacio entre elementos en el eje transversal (horizontal)
           mainAxisSpacing: 15,
@@ -208,7 +223,9 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: RecipeCard(
-            
+                //aca darle una chekeada
+                
+                recipeId: _recipes[index].recipeId,
                 title: _recipes[index].name,
                 cookTime: _recipes[index].totalTime,
                 rating: _recipes[index].rating.toString(),

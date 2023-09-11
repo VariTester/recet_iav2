@@ -75,3 +75,38 @@ PreferredSizeWidget appBarProfile(){
 
       );
 }
+
+PreferredSizeWidget appBarFavorite(){
+  return AppBar(
+        elevation: 0,
+        title:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+          Icon(Icons.restaurant_menu),
+          SizedBox(width: 10),
+          Text('Favoritos')
+        ]
+        ),
+
+          actions: const [
+            CircleAvatar(
+              radius: 18,
+              backgroundImage: AssetImage('images/p3.jpg'),
+            ),
+          ],
+
+          // drawer: const MyDrawer(),
+
+          // leading: IconButton(onPressed: () {},
+          // icon: IconButton(
+          //   icon: const Icon(Icons.menu,size: 27,), onPressed: () {
+              
+          //   },
+          // ),
+          // ),
+
+        backgroundColor: maincolor,
+
+      );
+}

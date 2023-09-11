@@ -1,11 +1,11 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/views/widgets/text_box.dart';
 
@@ -178,19 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: EdgeInsets.all(8.0),
             child:
             SizedBox(height: 10,)
-//             Align(
-//               alignment: Alignment.center,
-//               child:
-              
-// Text("Hola ${currentUser.email}",
-//   style: const TextStyle(
-//     fontSize: 20,
-//     color: Colors.black,
-//     fontFamily: 'ro',
-//   ),
-// )
 
-//             ),
 
           ),
           //profile pic

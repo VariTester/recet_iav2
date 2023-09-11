@@ -16,7 +16,7 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int index = 0; // Mueve esta línea dentro de la clase _NavigationState
-  List screen = [HomePage(),Ia(),Search(),favorite(),Profil()];
+  List screen = [HomePage(),Ia(),Search(),FavoritePage(),Profil()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
