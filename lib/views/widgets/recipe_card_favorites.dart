@@ -1,19 +1,26 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recet_iav2/consent/colors.dart';
+import 'package:recet_iav2/views/favorite.dart';
 import 'package:recet_iav2/views/widgets/like_button.dart';
 
 class RecipeCardFavorites extends StatefulWidget {
+  final String recipeId;
+
   final String title;
   final String rating;
   final String cookTime;
   final String thumbnailUrl;
-  final void Function() onTap;
+  final void Function(String) onTap;
   const RecipeCardFavorites({Key key, 
-    @required this.title,
-    @required this.cookTime,
-    @required this.rating,
-    @required this.thumbnailUrl, this.onTap,
+    this.recipeId,
+
+     this.title,
+     this.cookTime,
+     this.rating,
+     this.thumbnailUrl, this.onTap,
   }) : super(key: key);
 
   @override
@@ -23,8 +30,69 @@ class RecipeCardFavorites extends StatefulWidget {
 class _RecipeCardFavoritesState extends State<RecipeCardFavorites> {
 
   // //vamos a obtener el usuario de firebase
-  // final currentUser = FirebaseAuth.instance.currentUser;
-  // bool isLiked = false;
+  final currentUser = FirebaseAuth.instance.currentUser;
+  bool isLiked = false;
+
+  @override
+void initState() {
+  super.initState();
+
+  // Consulta la información de "Me gusta" del usuario actual
+  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+
+  userRef.get().then((DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.exists) {
+      // Convierte los datos del documento Firestore en un mapa
+      Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+
+      // Verifica si 'likes' existe en los datos del usuario
+      if (userData.containsKey('likes')) {
+        // Obtiene el mapa de 'likes'
+        var likesMap = userData['likes'] as Map<String, dynamic>;
+
+        // Verifica si 'widget.recipeId' existe en el mapa de 'likes'
+        if (likesMap.containsKey(widget.recipeId)) {
+          // Si existe, establece 'isLiked' en true
+          setState(() {
+            isLiked = true;
+          });
+        }
+      }
+    }
+  });
+}
+
+  void addLike(String recipeId) async{
+  setState(() {
+    isLiked = !isLiked;
+  });
+    // Obtén una referencia al documento del usuario actual
+  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+  // DocumentReference postRef = FirebaseFirestore.instance.collection('users').doc(widget.recipeId);
+
+  if(isLiked){
+      // Agregar el ID de la receta a la lista de "likes" del usuario
+      await userRef.update({'likes.$recipeId' :true});
+
+  }else{
+      // Quitar el ID de la receta de la lista de "likes" del usuario
+      await userRef.update({
+        'likes.$recipeId': FieldValue.delete(),
+        
+      },
+      );
+      Navigator.pop(context);
+        // Abre la pantalla actual nuevamente para actualizarla
+      Navigator.push(context,
+          MaterialPageRoute(
+            builder: (context)=>  const FavoritePage(),
+          ),
+        );
+  
+
+  }
+
+}
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +147,20 @@ return Container(
           mainAxisAlignment: MainAxisAlignment.end,
 
           children:  [
-
-            LikeButton(isLiked: false, onTap: (){})
+            Column(
+              children: [
+                LikeButton(
+                  isLiked: isLiked,
+                  //gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                  onTap: () {
+                    addLike(widget.recipeId);
+                  },
+                  
+                ),
+                
+              ],
+            )
+          
 
           ],
 

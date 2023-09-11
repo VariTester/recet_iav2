@@ -4,13 +4,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:recet_iav2/consent/colors.dart';
 import 'package:recet_iav2/views/widgets/like_button.dart';
 
 // import 'package:recet_iav2/views/widgets/like_button.dart';
 
 class RecipeCard extends StatefulWidget {
+  
 
   // final String user;
   //una lista de las recetas que te gustan  

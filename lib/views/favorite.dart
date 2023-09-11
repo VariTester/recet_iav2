@@ -19,6 +19,9 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+
+  //   //user
+  // final currentUser = FirebaseAuth.instance.currentUser;
    
   List<Recipe> _favoriteRecipes = [];
 
@@ -30,6 +33,14 @@ class _FavoritePageState extends State<FavoritePage> {
 
     getFavoriteRecipes();
   }
+
+    //aqui trato de obtener los likes
+    void getLikes(){
+    FirebaseFirestore.instance.collection('user').add({
+      'Likes':[],
+    });
+  }
+
     Future<void> getFavoriteRecipes() async {
     // Obtén el usuario actualmente autenticado
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -144,7 +155,9 @@ class _FavoritePageState extends State<FavoritePage> {
                     ],
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: RecipeCardFavorites(title: _favoriteRecipes[index].name,
+                  child: RecipeCardFavorites(
+                  recipeId: _favoriteRecipes[index].recipeId,  
+                  title: _favoriteRecipes[index].name,
                   cookTime: _favoriteRecipes[index].totalTime,
                   rating: _favoriteRecipes[index].rating.toString(),
                   thumbnailUrl: _favoriteRecipes[index].images,)
