@@ -44,12 +44,35 @@ class _RecipeCardState extends State<RecipeCard> {
   final currentUser = FirebaseAuth.instance.currentUser;
   bool isLiked = false;
   
-  // @override
-  // void initState() {
+@override
+void initState() {
+  super.initState();
 
-  //   super.initState();
-  //   isLiked = widget.likes.contains(currentUser.email);
-  // }
+  // Consulta la información de "Me gusta" del usuario actual
+  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+
+  userRef.get().then((DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.exists) {
+      // Convierte los datos del documento Firestore en un mapa
+      Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+
+      // Verifica si 'likes' existe en los datos del usuario
+      if (userData.containsKey('likes')) {
+        // Obtiene el mapa de 'likes'
+        var likesMap = userData['likes'] as Map<String, dynamic>;
+
+        // Verifica si 'widget.recipeId' existe en el mapa de 'likes'
+        if (likesMap.containsKey(widget.recipeId)) {
+          // Si existe, establece 'isLiked' en true
+          setState(() {
+            isLiked = true;
+          });
+        }
+      }
+    }
+  });
+}
+
 
   //toggle like
   // void addLike(String recipeId){
