@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recet_iav2/consent/appbar.dart';
 import 'package:recet_iav2/views/profile_page.dart';
@@ -7,6 +9,8 @@ import 'package:recet_iav2/views/widgets/recipe_card_favorites.dart';
 
 import '../models/recipe.api.dart';
 import '../models/recipe.dart';
+
+
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key key}) : super(key: key);
 
@@ -15,23 +19,58 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  List<Recipe> _recipes;
+   
+  List<Recipe> _favoriteRecipes = [];
+
   bool _isLoading = true;
 
     @override
   void initState() {
     super.initState();
 
-    getRecipes();
+    getFavoriteRecipes();
   }
+    Future<void> getFavoriteRecipes() async {
+    // Obtén el usuario actualmente autenticado
+    final currentUser = FirebaseAuth.instance.currentUser;
 
-  Future<void> getRecipes() async{
-    _recipes = await RecipeApi.getRecipe();
-    setState(() {
-      _isLoading = false;
-    });
-    // print(_recipes);
+    if (currentUser != null) {
+      // Obtén las recetas favoritas del usuario actual desde Firestore
+      final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+      final userData = await userRef.get();
+
+      if (userData.exists) {
+        // final likes = userData.data()?['likes'] as Map<String, dynamic>;
+        final likes = userData.data()['likes'] as Map <String, dynamic>;
+
+        // Filtra las recetas favoritas en función de los "likes" del usuario
+        final favoriteRecipeIds = likes.keys.toList();
+        final allRecipes = await RecipeApi.getRecipe(); // Obtén todas las recetas
+
+        setState(() {
+          _favoriteRecipes = allRecipes.where((recipe) => favoriteRecipeIds.contains(recipe.recipeId)).toList();
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
+  // Future<void> getRecipes() async{
+  //   // Obtén el usuario actualmente autenticado
+    
+  //   // _recipes = await RecipeApi.getRecipe();
+  //   // setState(() {
+  //   //   _isLoading = false;
+  //   // });
+  //   // print(_recipes);
+  // }
   
   @override
 
@@ -105,26 +144,15 @@ class _FavoritePageState extends State<FavoritePage> {
                     ],
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: RecipeCardFavorites(title: _recipes[index].name,
-                cookTime: _recipes[index].totalTime,
-                rating: _recipes[index].rating.toString(),
-                thumbnailUrl: _recipes[index].images,)
-                  // Column(
-                  //   children: [
-                  //     SizedBox(
-                  //       height: 10,
-                  //     ),
-                  //     Row(
-                  //       children: [
-                  //         Icon(Icons.favorite)
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
+                  child: RecipeCardFavorites(title: _favoriteRecipes[index].name,
+                  cookTime: _favoriteRecipes[index].totalTime,
+                  rating: _favoriteRecipes[index].rating.toString(),
+                  thumbnailUrl: _favoriteRecipes[index].images,)
+
                 );
               },
               //cantidad de elementos
-              childCount: 6,
+              childCount: _favoriteRecipes.length,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 //columnas

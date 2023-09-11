@@ -74,34 +74,6 @@ void initState() {
 }
 
 
-  //toggle like
-  // void addLike(String recipeId){
-  //   DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-
-  //   userRef.update({
-  //     'likes':FieldValue.arrayUnion([recipeId])
-  //   });
-  // }
-
-  // void toggleLike(String recipeId){
-  //   setState(() {
-  //     isLiked = !isLiked;
-      
-  //   });
-
-
-  //   if(isLiked){
-  //      DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-  //      userRef.update({
-  //     'likes':FieldValue.arrayUnion([recipeId])
-  //   });
-  //   }
-
-
-
-
-  // }
-
   void addLike(String recipeId) async{
   setState(() {
     isLiked = !isLiked;
@@ -115,10 +87,7 @@ void initState() {
       await userRef.update({'likes.$recipeId' :true});
       // postRef.update({
       //   'likes': FieldValue.arrayUnion([currentUser.email]),
-      // });
-
-
-      
+      // }); 
       
   // await userRef.update({
   //   // 'likes': FieldValue.arrayUnion([recipeId]),
