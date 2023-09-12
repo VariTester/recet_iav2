@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = false;
     });
-    // print(_recipes);
+    print(_recipes);
   }
 
   void goToProfilePage(){
@@ -219,6 +219,9 @@ class _HomePageState extends State<HomePage> {
                       thumbnailUrl: _recipes[index].images,
                       title: _recipes[index].name,
                       rating: _recipes[index].rating.toString(),
+                      preparationSteps: _recipes[index].preparationSteps,
+                      
+                      ingredientLines:_recipes[index].ingredientLines,
                     ),
                       
                     ),

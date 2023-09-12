@@ -6,10 +6,10 @@ class RecipeApi{
 
 static Future<List<Recipe>> getRecipe()async{
   var uri = Uri.https('yummly2.p.rapidapi.com','/feeds/list',
-  {"limit": "10","start": "0","tag": "list.recipe.popular"});
+  {"limit": "24","start": "0","tag": "list.recipe.popular"});
 
   final response = await http.get(uri, headers: {
-    "X-RapidAPI-Key": "e98f95a02bmsh1842462a9ba5810p1a0782jsnaf3bb760fffc",
+    "X-RapidAPI-Key": "bdacc3bb1emsha258d5f5d2e4895p149232jsn6dbcdd4a97c1",
 	  "X-RapidAPI-Host": "yummly2.p.rapidapi.com",
     "useQueryString" : "true"
     });
@@ -18,8 +18,10 @@ static Future<List<Recipe>> getRecipe()async{
   List _temp = [];
 
   for (var i in data['feed']) {
-    _temp.add(i['content']['details']);
+    _temp.add(i['content']);
+    // _temp.add(i['content']);
   }
+  print(_temp);
 
   return Recipe.recipesFromSnapshot(_temp);
 
