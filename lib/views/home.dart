@@ -217,6 +217,8 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (BuildContext contex)=>Recipe_details(
                       thumbnailUrl: _recipes[index].images,
+                      title: _recipes[index].name,
+                      rating: _recipes[index].rating.toString(),
                     ),
                       
                     ),
